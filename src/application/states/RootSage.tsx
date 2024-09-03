@@ -1,9 +1,9 @@
-import { all } from "axios";
-import { fork } from "redux-saga/effects";
-import { watchSignUp } from "./sagas/auth/authSaga";
+import { all, fork } from "redux-saga/effects";
+import { watchLogin, watchSignUp } from "./sagas/auth/authSaga";
 
 export default function* rootSaga(){
     yield all([
-        fork(watchSignUp)
+        fork(watchSignUp),
+        fork(watchLogin)
     ])
 }

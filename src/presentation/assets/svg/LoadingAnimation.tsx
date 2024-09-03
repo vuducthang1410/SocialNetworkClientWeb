@@ -25,9 +25,9 @@ const LoadingAnimation = (props: Props) => {
     >
       <g>
         <circle
-          stroke-dasharray="164.93361431346415 56.97787143782138"
+          strokeDasharray="164.93361431346415 56.97787143782138"
           r="35"
-          stroke-width="10"
+          strokeWidth="10"
           stroke={mainColor}
           fill="none"
           cy="50"

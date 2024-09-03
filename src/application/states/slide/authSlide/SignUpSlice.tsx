@@ -19,7 +19,7 @@ const signupSlide=createSlice({
             lastname:action.payload.lastname,
             firstname:action.payload.firstname,
             confirmPassword:action.payload.confirmPassword
-        })
+        }),
     }
 })
 export const {setInitialState}=signupSlide.actions;

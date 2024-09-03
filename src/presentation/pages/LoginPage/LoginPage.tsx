@@ -2,7 +2,7 @@ import FacebookLogo from "presentation/assets/svg/FacebookLogo";
 import GithubLogo from "presentation/assets/svg/GithubLogo";
 import GoogleIcon from "presentation/assets/svg/GoogleIcon";
 import SliderComponent from "presentation/components/SliderComponent";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { IoKeyOutline } from "react-icons/io5";
@@ -10,6 +10,11 @@ import { useNavigate } from "react-router-dom";
 import { handleTextInput } from "./HandleLoginPage";
 import HeaderLogo from "presentation/components/HeaderLogo";
 import UserLogin from "domain/entities/UserLogin";
+import { useDispatch } from "react-redux";
+import { ActionType } from "domain/enums/ActionTypeSaga";
+import { useSelector } from "react-redux";
+import { RootState } from "application/states/Reducers";
+import LoadingAnimation from "presentation/assets/svg/LoadingAnimation";
 
 type Props = {};
 
@@ -18,12 +23,27 @@ const LoginPage = (props: Props) => {
     username: "",
     password: "",
   });
+  const [isLoading, setIsloading] = useState(false);
+  const dispatch = useDispatch();
+  const locationHref = useSelector((state: RootState) => state.href);
+  const authencation = useSelector((state: RootState) => state.authencation);
+  useEffect(() => {
+    setIsloading(false);
+    if (authencation.isAuthencation) {
+      navigation(locationHref.actionHref);
+    }
+  }, [authencation.isAuthencation]);
+  const login = (event: React.FormEvent<HTMLFormElement>) => {
+    setIsloading(true);
+    event.preventDefault();
+    dispatch({ type: ActionType.LOG_IN, payload: userLogin });
+  };
   const navigation = useNavigate();
   const [visible, setVisible] = useState(false);
   return (
     <div className="flex flex-row w-full">
       <main className="relative w-full flex justify-center items-center flex-col">
-        <HeaderLogo/>
+        <HeaderLogo />
         <div className="flex justify-center items-center flex-col py-10">
           <div className="flex flex-col w-[300px] mb-10 ">
             <label className="text-left text-2xl font-semibold text-slate-700">
@@ -34,7 +54,7 @@ const LoginPage = (props: Props) => {
             </label>
           </div>
 
-          <form className="flex gap-5 flex-col">
+          <form className="flex gap-5 flex-col" onSubmit={login} method="POST">
             <div className="relative rounded-3xl bg-zinc-100 ">
               <div className="absolute bg-white rounded-full h-9 w-9 flex justify-center items-center top-1 left-1 ">
                 <AiOutlineUser />
@@ -88,15 +108,23 @@ const LoginPage = (props: Props) => {
                 {"Lost password?"}
               </button>
             </div>
-            <button
-              type="submit"
-              className=" bg-violet-600 rounded-3xl text-white w-[300px] h-10"
-              onClick={(e) => {
-                navigation("/")
-              }}
-            >
-              {"Log into your account"}
-            </button>
+            {isLoading ? (
+              <div className=" bg-violet-600 rounded-3xl text-white w-[300px] h-10 flex justify-center items-center">
+                <LoadingAnimation
+                  height={30}
+                  width={30}
+                  mainColor="white"
+                  backgroundColor="background-color: rgb(124 58 237 / var(--tw-bg-opacity))"
+                />
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className=" bg-violet-600 rounded-3xl text-white w-[300px] h-10 flex justify-center items-center"
+              >
+                {"Log into your account"}
+              </button>
+            )}
           </form>
           <div className="flex justify-center items-center">
             <div className="h-0 w-[70px] border-y border-slate-400"></div>

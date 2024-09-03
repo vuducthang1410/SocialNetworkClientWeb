@@ -1,9 +1,15 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import forgotPasswordSlide from './slide/authSlide/ForgotPasswordSlide'
-import SignUpSlide from './slide/authSlide/SignUpSlide'
+import forgotPasswordSlice from './slide/authSlide/ForgotPasswordSlice'
+import SignUpSlide from './slide/authSlide/SignUpSlice'
+import authSlice from './slide/authSlide/AuthSlice'
+import Authencation from './slide/authSlide/AuthencationSlide'
+import HrefSlice from './slide/hrefSlice'
 const reducer=combineReducers({
-    forgotPassword:forgotPasswordSlide,
+    forgotPassword:forgotPasswordSlice,
     signUp:SignUpSlide,
+    auth:authSlice,
+    authencation:Authencation,
+    href:HrefSlice
 })
 export type RootState = ReturnType<typeof reducer>;
 export default reducer;

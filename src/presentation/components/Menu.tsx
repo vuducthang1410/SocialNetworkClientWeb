@@ -52,13 +52,13 @@ const Menu = (props: Props) => {
     {
         id: 5,
         name: "Search",
-        url: "/Search",
+        url: "/search",
         itemFocus:   <IoSearchOutline size={25} />,
         itemNoFocus:   <IoSearchOutline size={25} />,
       },
   ];
   return (
-    <div className="w-1/5 overflow-hidden fixed ml-4">
+    <div className="w-1/5 overflow-hidden h-full fixed ml-4 border-r">
       {itemComponent.map((value: ItemMenu, index: number) => (
         <button
           key={value.id}
